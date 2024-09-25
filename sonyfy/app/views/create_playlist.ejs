@@ -1,0 +1,104 @@
+<%- include('partials/start') %> <%- include('partials/header') %>
+
+<div class="container mx-auto p-6">
+  <div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg">
+    <h1 class="text-3xl font-bold text-white mb-6">Create New Playlist</h1>
+
+    <!-- Playlist Creation Form -->
+    <form action="/playlists/create" method="POST">
+      <!-- Playlist Title -->
+      <div class="mb-4">
+        <label
+          for="playlistTitle"
+          class="block text-gray-300 text-sm font-bold mb-2"
+        >
+          Playlist Title
+        </label>
+        <input
+          type="text"
+          id="playlistTitle"
+          name="playlistTitle"
+          class="w-full p-2 bg-gray-700 text-white rounded"
+          placeholder="Enter playlist title"
+          required
+        />
+      </div>
+
+      <!-- Song Selection -->
+      <div class="mb-8">
+        <label class="block text-gray-300 text-lg font-semibold mb-3">
+          Select Songs
+        </label>
+        <div class="overflow-hidden bg-gray-700 rounded-lg p-3">
+          <table
+            id="songsTable"
+            class="display w-full text-left text-sm text-gray-300"
+          >
+            <thead>
+              <tr>
+                <th class="p-2 w-10">Select</th> <!-- Adjusted width -->
+                <th class="p-2">Title</th>
+                <th class="p-2">Artist</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% songs.forEach(function(song) { %>
+              <tr>
+                <td class="p-2 w-10"> <!-- Adjusted width -->
+                  <input
+                    type="checkbox"
+                    id="song_<%= song.id %>"
+                    name="songs[]"
+                    value="<%= song.id %>"
+                    class="mr-2"
+                  />
+                </td>
+                <td class="p-2">
+                  <label for="song_<%= song.id %>" class="text-white"
+                    ><%= song.title %></label
+                  >
+                </td>
+                <td class="p-2">
+                  <label for="song_<%= song.id %>" class="text-white"
+                    ><%= song.artist %></label
+                  >
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between">
+        <button
+          type="submit"
+          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
+          Create Playlist
+        </button>
+        <a
+          href="/playlists"
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+        >
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include('partials/dataTablesConfig') %>
+
+<script>
+  $(document).ready(function () {
+    $("#songsTable").DataTable({
+      searching: true,
+      paging: false,
+      info: false,
+      ordering: false,
+      order: [],
+    });
+  });
+</script>
+<%- include('partials/end') %>

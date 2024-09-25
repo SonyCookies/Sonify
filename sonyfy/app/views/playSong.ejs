@@ -1,0 +1,91 @@
+<%- include('partials/start')%>
+<div
+  id="songPlayPage"
+  class="min-h-screen flex items-center justify-center background-gradient"
+>
+  <div class="w-full max-w-xl p-4 text-white">
+    <!-- Back Button -->
+    <div class="mb-4">
+      <button
+        id="backButton"
+        class="bg-gray-600 p-2 rounded-full hover:bg-gray-700 flex items-center"
+        onclick="window.location.href='/songs'"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-6 flex justify-center">
+      <img
+        id="albumCover"
+        src="../../public/<%= song.imageFilePath %>"
+        alt="<%= song.album %>"
+        class="w-48 h-48 object-cover shadow-lg rounded-lg"
+      />
+    </div>
+
+    <div class="text-center mb-6">
+      <h1 class="text-4xl font-bold"><%= song.title %></h1>
+      <p class="text-lg text-gray-300">by <%= song.artist %></p>
+      <p class="text-sm text-gray-400">Album: <%= song.album %></p>
+    </div>
+
+    <div class="flex justify-center space-x-4">
+      <button
+        class="bg-blue-500 p-3 rounded-full hover:bg-blue-600"
+        id="playPauseButton"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M14.752 11.168l-6.12-3.408A1 1 0 007 8.62v6.76a1 1 0 001.632.774l6.12-3.408a1 1 0 000-1.768z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mt-6">
+      <div class="flex items-center justify-between mb-2">
+        <span id="currentTime" class="text-sm">0:00</span>
+        <span id="duration" class="text-sm">0:00</span>
+      </div>
+      <input
+        type="range"
+        id="progressBar"
+        value="0"
+        min="0"
+        class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+      />
+      <audio id="audioPlayer" class="hidden" autoplay>
+        <source src="../../public/<%= song.songFilePath %>" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+<script src="../../src/js/albumCover.js"></script>
+<script src="../../src/js/play.js"></script>
+<%- include('partials/end')%>
