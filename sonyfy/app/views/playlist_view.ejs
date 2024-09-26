@@ -2,15 +2,38 @@
 <%- include('partials/header') %>
 
 <div class="container mx-auto p-6">
-  <!-- Playlist Information -->
-  <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
-    <h1 class="text-3xl font-bold text-white mb-2"><%= playlist.name %></h1>
-    <p class="text-gray-400 text-lg">Created on: <%= new Date(playlist.fcreated_at).toLocaleDateString() %></p>
+  <!-- Back Button -->
+  <div class="mb-4">
+    <a href="/playlists" class="flex items-center text-gray-400 hover:text-white">
+      <i class="fas fa-arrow-left mr-2"></i>
+      Back to Playlists
+    </a>
   </div>
 
-  <!-- Song List -->
+  <% if (playlist) { %> <!-- Only show if playlist exists -->
+  <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-white mb-2"><%= playlist.name %></h1>
+        <p class="text-gray-400 text-lg">
+          Created on: <%= playlist.created_at %>
+        </p>
+      </div>
+      <!-- Edit Button with Icon -->
+      <a
+        href="/playlists/edit/<%= playlist.id %>"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center"
+      >
+        <i class="fas fa-edit mr-2"></i>
+        Edit
+      </a>
+    </div>
+  </div>
+
   <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-medium text-white mb-4">Songs in "<i><%= playlist.name %></i>"</h2>
+    <h2 class="text-2xl font-medium text-white mb-4">
+      Songs in "<i><%= playlist.name %></i>"
+    </h2>
     <table id="songsTable" class="display w-full text-sm text-gray-300">
       <thead>
         <tr>
@@ -18,27 +41,51 @@
           <th class="py-2 px-4">Title</th>
           <th class="py-2 px-4">Artist</th>
           <th class="py-2 px-4">Album</th>
-          <th class="py-2 px-4">Duration</th>
+          <th class="py-2 px-4">Action</th>
         </tr>
       </thead>
       <tbody>
-
+        <% songs.forEach(song => { %>
+        <tr>
+          <td class="py-2 px-4 w-32">
+            <img src="../../public/<%= song.imageFilePath %>" alt="Cover" class="w-16 h-16 object-cover">
+          </td>
+          <td class="py-2 px-4"><%= song.title %></td>
+          <td class="py-2 px-4 w-32"><%= song.artist %></td>
+          <td class="py-2 px-4 w-32"><%= song.album %></td>
+          <td class="py-2 px-4 w-5">
+            <div class="flex space-x-2">
+              <button
+                class="bg-red-500 text-white p-2 rounded hover:bg-red-600 deleteSongButton"
+                data-song-id="<%= song.id %>"
+                title="Delete"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
       </tbody>
     </table>
   </div>
+  <% } else { %>
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+      <p class="text-white">Playlist not found.</p>
+    </div>
+  <% } %>
 </div>
 
-<!-- Include DataTables Config -->
 <%- include('partials/dataTablesConfig') %>
 
 <script>
-  $(document).ready(function() {
-    $('#songsTable').DataTable({
+  $(document).ready(function () {
+    $("#songsTable").DataTable({
       responsive: true,
       searching: true,
       paging: true,
       info: true,
-      order: [[1, 'asc']], // Sort by the second column (song title)
+      order: [[1, "asc"]],
     });
   });
 </script>

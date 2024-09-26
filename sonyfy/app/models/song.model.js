@@ -120,4 +120,18 @@ module.exports = {
     const [row] = await db.execute("SELECT * FROM songs");
     return row;
   },
+
+  getSongsByPlaylistId: (playlistId, callback) => {
+    const query = `
+      SELECT songs.* FROM songs 
+      INNER JOIN playlist_songs ON songs.id = playlist_songs.song_id 
+      WHERE playlist_songs.playlist_id = ?`;
+
+    db.query(query, [playlistId], (err, results) => {
+      if (err) {
+        return callback(err);
+      }
+      callback(null, results.length ? results : []);
+    });
+  },
 };

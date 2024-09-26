@@ -11,36 +11,12 @@
     </button>
   </div>
 
-  <div class="bg-gray-800 p-4 rounded-lg">
-    <% if (playlists && playlists.length > 0) { %> <%
-    playlists.forEach(function(playlist) { %>
-    <div class="flex justify-between items-center mb-4 p-4 bg-gray-700 rounded">
-      <div>
-        <h2 class="text-xl font-semibold text-white"><%= playlist.name %></h2>
-        <p class="text-gray-400 text-sm">Songs: <%= playlist.songCount %></p>
-      </div>
-      <div class="flex space-x-2">
-        <button
-          class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 playPlaylistButton"
-          data-playlist-id="<%= playlist.id %>"
-        >
-          <i class="fas fa-play"></i>
-        </button>
-
-        <button
-          class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 viewPlaylistButton"
-          data-playlist-id="<%= playlist.id %>"
-          onclick="viewPlaylist(<%= playlist.id %>)">
-          <i class="fas fa-eye"></i>
-        </button>
-      </div>
-    </div>
-    <% }); %> <% } else { %>
-    <p class="text-gray-400">No playlists available.</p>
-    <% } %>
+  <div class="bg-gray-800 p-4 rounded-lg playlists-container">
+    <%- include('partials/playlist_list', { playlists: playlists }) %>
   </div>
+</div>
 
-  <!-- Create Playlist Modal -->
+
   <div
     id="createPlaylistModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
@@ -81,34 +57,6 @@
       </form>
     </div>
   </div>
-
-  <!-- Delete Confirmation Modal -->
-  <div
-    id="deleteConfirmationModal"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
-  >
-    <div class="bg-gray-800 p-6 rounded-lg w-96">
-      <h2 class="text-2xl text-white mb-4">Confirm Deletion</h2>
-      <p class="text-gray-300 mb-4">
-        Are you sure you want to delete this playlist?
-      </p>
-      <div class="flex justify-between">
-        <button
-          id="confirmDeletePlaylistButton"
-          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Delete
-        </button>
-        <button
-          id="cancelDeletePlaylistButton"
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Success Modal -->
   <div
     id="successModal"
@@ -128,8 +76,50 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Delete Confirmation Modal -->
+<div id="deleteConfirmationModal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-gray-800 rounded-lg shadow-lg p-6 max-w-md w-full">
+    <h2 class="text-xl text-white mb-4">Confirm Deletion</h2>
+    <p class="text-gray-300 mb-6">Are you sure you want to delete this playlist?</p>
+    
+    <div class="flex justify-end">
+      <button
+        id="cancelDeleteButton"
+        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+      >
+        Cancel
+      </button>
+      <button
+        id="confirmDeleteButton"
+        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 ml-2"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
 </div>
 
+<!-- Success/Error Modal (shared for both success and error) -->
+<div id="feedbackModal" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-gray-800 rounded-lg shadow-lg p-6 max-w-md w-full">
+    <h2 id="feedbackTitle" class="text-xl text-white mb-4"></h2>
+    <p id="feedbackMessage" class="text-gray-300 mb-6"></p>
+    
+    <div class="flex justify-end">
+      <button
+        id="closeFeedbackButton"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+
 <script src="../../src/js/playlist.js"></script>
+<script src="../../src/js/deletePlaylist.js"></script>
 
 <%- include('partials/end') %>

@@ -23,7 +23,7 @@ addSongForm.addEventListener("submit", (event) => {
     .then((response) => {
       if (response.ok) {
         addSongModal.classList.add("hidden");
-        addSongForm.reset(); 
+        addSongForm.reset();
 
         successModal.classList.remove("hidden");
       } else {
@@ -36,6 +36,6 @@ addSongForm.addEventListener("submit", (event) => {
 });
 
 closeSuccessModal.addEventListener("click", () => {
-    successModal.classList.add("hidden");
-    window.location.reload();
+  successModal.classList.add("hidden");
+  window.location.reload();
 });

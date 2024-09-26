@@ -29,7 +29,7 @@
         <% songs.forEach(song => { %>
         <tr class="border-b border-gray-700 hover:bg-gray-600 transition duration-200">
           <td class="py-4 px-4">
-            <img src="../../../../public/<%= song.imageFilePath %>"
+            <img src="../../public/<%= song.imageFilePath %>"
               alt="Song Cover"
               class="rounded-md w-32" />
           </td>
@@ -48,12 +48,7 @@
               >
                 <i class="fas fa-play"></i>
               </button>
-              <button
-                class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-                title="Add to Playlist"
-              >
-                <i class="fas fa-plus"></i>
-              </button>
+            
               <button
                 class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 edit-button"
                 data-song='<%= JSON.stringify(song) %>' // Pass song data as JSON

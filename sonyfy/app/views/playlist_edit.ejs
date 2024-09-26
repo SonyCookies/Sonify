@@ -1,0 +1,79 @@
+<%- include('partials/start') %>
+<%- include('partials/header') %>
+
+<div class="container mx-auto p-6">
+  <!-- Back Button -->
+  <div class="mb-4">
+    <a href="/playlists" class="flex items-center text-gray-400 hover:text-white">
+      <i class="fas fa-arrow-left mr-2"></i>
+      Back to Playlists
+    </a>
+  </div>
+
+  <!-- Playlist Info -->
+  <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-white mb-2"><%= playlist.name %></h1>
+        <p class="text-gray-400 text-lg">
+          Created on: <%= playlist.fcreated_at %>
+        </p>
+      </div>
+      <!-- Edit Button with Icon -->
+      <a
+        href="/playlists/edit/<%= playlist.playlist_id %>"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center"
+      >
+        <i class="fas fa-edit mr-2"></i>
+        Edit
+      </a>
+    </div>
+  </div>
+
+  <!-- Songs in Playlist -->
+  <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-medium text-white mb-4">
+      Songs in "<i><%= playlist.name %></i>"
+    </h2>
+    <table id="songsTable" class="display w-full text-sm text-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 px-4">Cover</th>
+          <th class="py-2 px-4">Title</th>
+          <th class="py-2 px-4">Artist</th>
+          <th class="py-2 px-4">Album</th>
+          <th class="py-2 px-4">Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% songs.forEach(song => { %>
+          <tr>
+            <td class="py-2 px-4">
+              <img src="<%= song.cover %>" alt="Cover" class="h-12 w-12 object-cover">
+            </td>
+            <td class="py-2 px-4"><%= song.title %></td>
+            <td class="py-2 px-4"><%= song.artist %></td>
+            <td class="py-2 px-4"><%= song.album %></td>
+            <td class="py-2 px-4"><%= song.duration %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/dataTablesConfig') %>
+
+<script>
+  $(document).ready(function () {
+    $("#songsTable").DataTable({
+      responsive: true,
+      searching: true,
+      paging: true,
+      info: true,
+      order: [[1, "asc"]]
+    });
+  });
+</script>
+
+<%- include('partials/end') %>

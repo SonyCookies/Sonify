@@ -1,0 +1,33 @@
+<% if (playlists && playlists.length > 0) { %>
+  <% playlists.forEach(function(playlist) { %>
+    <div class="flex justify-between items-center mb-4 p-4 bg-gray-700 rounded">
+      <div>
+        <h2 class="text-xl font-semibold text-white"><%= playlist.name %></h2>
+        <p class="text-gray-400 text-sm">Songs: <%= playlist.songCount %></p>
+      </div>
+      <div class="flex space-x-2">
+        <button
+          class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 playPlaylistButton"
+          data-playlist-id="<%= playlist.id %>"
+        >
+          <i class="fas fa-play"></i>
+        </button>
+
+        <button
+          class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 viewPlaylistButton"
+          data-playlist-id="<%= playlist.id %>"
+          onclick="viewPlaylist(<%= playlist.id %>)">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button
+          class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 deletePlaylistButton"
+          data-playlist-id="<%= playlist.id %>"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  <% }); %>
+<% } else { %>
+  <p class="text-gray-400">No playlists available.</p>
+<% } %>
